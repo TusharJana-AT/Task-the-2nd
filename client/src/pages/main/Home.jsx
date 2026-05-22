@@ -9,10 +9,14 @@ import TaskCard from "../../components/task/TaskCard";
 import FilterDropdown from "../../components/task/FilterDropdown";
 import TaskModal from "../../components/task/TaskModal";
 import Pagination from "../../components/task/Pagination";
+import Spinner from "../../components/Loader/Spinner";
+import EmptyState from "../../components/common/EmptyState";
 
 function Home() {
   const [task, setTask] = useState([]);
   const { user } = useAuth();
+  // console.log("User",user);
+  
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -21,6 +25,7 @@ function Home() {
 
   const [openModal, setOpenModal] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
+
   const taskListing = async () => {
     try {
       setLoading(true);
@@ -69,8 +74,8 @@ function Home() {
       console.log(error);
     }
   };
-  
 
+  if (loading) return <Spinner />;
   return (
     <div className="min-h-screen bg-gray-100 p-6 flex flex-col">
       <div className="max-w-6xl mx-auto flex-1 w-full">
@@ -100,17 +105,13 @@ function Home() {
 
         {loading ? (
           <div className="text-center mt-10 text-xl font-semibold">
-            Loading Tasks...
+            <Spinner />
           </div>
         ) : task.length === 0 ? (
-          <div className="bg-white rounded-2xl shadow p-10 text-center">
-            <h2 className="text-2xl font-semibold text-gray-700">
-              No Tasks Found
-            </h2>
-            <p className="text-gray-500 mt-2">
-              Start by creating your first task
-            </p>
-          </div>
+          <EmptyState
+            title="No Tasks Found"
+            message="Start by creating your first task"
+          />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {task.map((t) => (

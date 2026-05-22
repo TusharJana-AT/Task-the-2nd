@@ -9,15 +9,17 @@ import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { getAllUser } from "../../api/authAPI";
 import { addTaskSchema } from "../../validations/task.validation";
+import { useAuth } from "../../context/AuthContext";
 
 function AddTask() {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
-
+  const {user} = useAuth()
+  // console.log(user.id)
   useEffect(() => {
     const getUsers = async () => {
       const res = await getAllUser();
-      // console.log(res.data?.data);
+      console.log(res.data?.data);
       setUsers(res.data?.data);
     };
     getUsers();
@@ -78,8 +80,9 @@ function AddTask() {
             {...register("assignedTo")}
             className="w-full p-2 border rounded-lg"
           >
+          
             <option value="">Select One User</option>
-            {users.map((u) => (
+            {users.map((u) => user.id !== u.id && (
               <option key={u.id} value={u.id}>
                 {u.email}
               </option>

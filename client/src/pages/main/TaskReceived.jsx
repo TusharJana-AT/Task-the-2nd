@@ -9,6 +9,7 @@ import TaskCard from "../../components/task/TaskCard";
 import FilterDropdown from "../../components/task/FilterDropdown";
 import TaskModal from "../../components/task/TaskModal";
 import Pagination from "../../components/task/Pagination";
+import Spinner from "../../components/Loader/Spinner";
 
 
 function TaskReceived() {
@@ -71,7 +72,7 @@ function TaskReceived() {
       console.log(error);
     }
   };
-
+if(loading) return <Spinner/>
   return (
     <div className="min-h-screen bg-gray-100 p-6 flex flex-col">
       <div className="max-w-6xl mx-auto flex-1 w-full">

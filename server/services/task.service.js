@@ -15,11 +15,13 @@ export const createTask = async ({
     throw err;
   }
 
-  //   if (userId === assignedTo) {
-  //   const err = new Error("You cannot assign task to yourself");
-  //   err.statusCode = 400;
-  //   throw err;
-  // }
+    if (userId === assignedTo) {
+    const err = new Error("You cannot assign task to yourself");
+    err.statusCode = 400;
+    throw err;
+  }
+
+  
   const data = await Task.create({
     title,
     description,
@@ -48,27 +50,63 @@ export const updateTask = async ({
   description,
   status,
   dueDate,
+  assignedTo,
   taskId,
   userId,
 }) => {
-  const [updated] = await Task.update(
-    { title, description, status, dueDate },
-    { where: { id: taskId, userId } },
-  );
-  if (!updated) {
+
+  const task = await Task.findByPk(taskId);
+
+  if (!task) {
     const err = new Error(messages.task.TASK_NOTFOUNT);
-    err.statusCode = 400;
+    err.statusCode = 404;
     throw err;
   }
 
-  const editedTask = await Task.findOne({
-    where: {
-      id: taskId,
-      userId,
-    },
-  });
+  const isCreator = task.userId === userId;
+  const isAssignee = task.assignedTo === userId;
 
-  return editedTask;
+  if (!isCreator && !isAssignee) {
+    const err = new Error("Unauthorized");
+    err.statusCode = 403;
+    throw err;
+  }
+
+  const updates = {};
+
+  if (isCreator) {
+
+    if (title !== undefined) {
+      updates.title = title;
+    }
+
+    if (description !== undefined) {
+      updates.description = description;
+    }
+
+    if (dueDate !== undefined) {
+      updates.dueDate = dueDate;
+    }
+
+    if (assignedTo !== undefined) {
+
+      if (assignedTo === userId) {
+        const err = new Error("You cannot assign task to yourself");
+        err.statusCode = 400;
+        throw err;
+      }
+
+      updates.assignedTo = assignedTo;
+    }
+  }
+
+  if (isAssignee && status !== undefined) {
+    updates.status = status;
+  }
+
+  await task.update(updates);
+
+  return task;
 };
 
 export const fetchCreatedTasks = async ({

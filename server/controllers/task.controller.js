@@ -5,8 +5,6 @@ import {
   fetchAssignedTasks,
   fetchCreatedTasks,
   fetchSingleTask,
-  
-  
   updateTask,
 } from "../services/task.service.js";
 import { response } from "../utils/response.util.js";

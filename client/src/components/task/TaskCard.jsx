@@ -1,7 +1,9 @@
 import React from "react";
 import { getStatusColor } from "../../utils/task.utils";
+import { useAuth } from "../../context/AuthContext";
 
 function TaskCard({task,handleEdit,handleDelete,setSelectedTask,setOpenModal}) {
+  const {user}=useAuth()
   return (
     <div
 
@@ -61,12 +63,12 @@ function TaskCard({task,handleEdit,handleDelete,setSelectedTask,setOpenModal}) {
             Edit
           </button>
 
-          <button
+          {user.id!==task.assignedTo && <button
             className="px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 transition"
             onClick={() => handleDelete(task.id)}
           >
             Delete
-          </button>
+          </button>}
         </div>
       </div>
     </div>

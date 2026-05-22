@@ -48,7 +48,7 @@ export const loginUser = async ({ email, password }) => {
 
 
 export const getUser=async({userId})=>{
-  const user = await User.findOne({where:{id:userId}})
+  const user = await User.findOne({where:{id:userId},attributes: { exclude: ["password"] },})
 
       //  console.log("YOLO ",userId);
   if(!user){

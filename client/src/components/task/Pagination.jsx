@@ -2,7 +2,7 @@ import React from "react";
 
 function Pagination({page,setPage,totalPages}) {
   return (
-    <div className="fixed bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-8 px-6 py-3 rounded-xl">
+    <div className="fixed bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-8 px-8 py-3 rounded-xl bg-gray-300 font-bold">
       <button disabled={page === 1} onClick={() => setPage((prev) => prev - 1)}>
         Prev
       </button>

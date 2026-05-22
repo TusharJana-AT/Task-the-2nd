@@ -9,6 +9,7 @@ import AddTask from "../pages/task/AddTask";
 import EditTask from "../pages/task/EditTask";
 
 import TaskReceived from "../pages/main/TaskReceived";
+import PageNotFound from "../pages/ErrorPage/PageNotFound";
 
 
 export const router = createBrowserRouter([
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
         path:'/editTask/:id',
         element:<EditTask/>
       },
+      {
+        path:"*",
+        element:<PageNotFound/>
+      }
     ],
   },
   {
@@ -50,6 +55,10 @@ export const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path:"*",
+        element:<PageNotFound/>
+      }
     ],
   },
 ]);
