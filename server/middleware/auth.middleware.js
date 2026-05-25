@@ -10,7 +10,7 @@ export const verifyToken=(req,res,next)=>{
     if(!authHeader){
         // return res.status(401).json({message:"Unauthorized"})
         return response({
-            statusCode:200,
+            statusCode:401,
             message:messages.general.UNAUTHORIZED
         })
     }

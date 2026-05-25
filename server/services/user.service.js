@@ -36,7 +36,7 @@ export const loginUser = async ({ email, password }) => {
   const match=await bcrypt.compare(password,user.password)
   if(!match){
     const err = new Error(messages.user.WRONG_PASSWORD)
-    err.statusCode=401
+    err.statusCode=400
     throw err
   }
 

@@ -34,9 +34,7 @@ export const createTask = async ({
 };
 
 export const destroyTask = async ({ taskId, userId }) => {
-  const deleted = await Task.destroy({
-    where: { id: taskId, userId },
-  });
+  
   if (!deleted) {
     const err = new Error("Task not found");
     err.statusCode = 404;

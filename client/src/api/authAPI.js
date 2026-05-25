@@ -2,11 +2,11 @@ import { api } from "./api"
 
 
 export const loginUser=(data)=>{
-    return api.post('/user/login',data)
+    return api.post('/user/login',data,{ showSuccessToast: true })
 }
 
 export const registerUser=(data)=>{
-    return api.post('/user/register',data)
+    return api.post('/user/register',data,{ showSuccessToast: true })
 }
 
 export const getUser=()=>{
